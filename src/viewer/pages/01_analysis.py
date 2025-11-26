@@ -13,7 +13,24 @@ t1, t2 = st.tabs(["🎧 Noise", "🔗 URL"])
 
 with t1:
     st.subheader("Noise Level Distribution")
-    st.plotly_chart(px.scatter(df, x='timestamp', y='audio_db', color='app_name', size='audio_db'), use_container_width=True)
+    custom_colors = {
+        "Arc": "#4FC3F7",               # sky blue
+        "Obsidian": "#8E44AD",          # purple
+        "KakaoTalk": "#FEE500",         # yellow
+        "Discord": "#1B1F72",           # navy
+        "Microsoft Word": "#185ABD",    # blue
+        "Cursor": "#9AA0A6",            # gray
+    }
+    scatter_fig = px.scatter(
+        df,
+        x='timestamp',
+        y='audio_db',
+        color='app_name',
+        size='audio_db',
+        color_discrete_map=custom_colors,
+        color_discrete_sequence=px.colors.qualitative.Vivid
+    )
+    st.plotly_chart(scatter_fig, use_container_width=True)
 
 with t2:
     st.subheader("Top Domains")
