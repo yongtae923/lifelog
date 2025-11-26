@@ -1,0 +1,31 @@
+.DS_Store
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment files
+.env
+.env.*
+
+# Streamlit cache
+.streamlit/
+
+# IDE settings
+.idea/
+.vscode/
+
+# Local data/logs
+logs/
+db/*.db
+db/chroma_store/
+
