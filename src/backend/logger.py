@@ -9,12 +9,12 @@ import sounddevice as sd
 from PIL import Image
 import pytesseract
 
-# --- 설정 (경로: src/backend/logger.py -> 3단계 위가 프로젝트 루트) ---
+# --- Configuration (project root is three levels up from this file) ---
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DB_PATH = os.path.join(BASE_DIR, 'db', 'lifelog.db')
 TEMP_SCREENSHOT_PATH = os.path.join(BASE_DIR, 'logs', 'temp_screen.png')
 
-# Tesseract 경로 설정
+# Configure the Tesseract binary path
 tesseract_cmd_path = shutil.which('tesseract')
 if tesseract_cmd_path:
     pytesseract.pytesseract.tesseract_cmd = tesseract_cmd_path
@@ -25,7 +25,7 @@ else:
             pytesseract.pytesseract.tesseract_cmd = path
             break
 
-# --- DB 초기화 ---
+# --- Database initialization ---
 def init_db():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -43,7 +43,7 @@ def init_db():
     conn.commit()
     conn.close()
 
-# --- 센서 함수들 ---
+# --- Sensor helper functions ---
 def get_browser_url(app_name):
     if app_name not in ["Google Chrome", "Safari", "Arc"]: return ""
     script = ""
@@ -85,7 +85,7 @@ def get_active_window_info():
     except: pass
     return "Unknown", "Unknown"
 
-# --- 메인 로직 ---
+# --- Main loop ---
 def capture_and_log():
     try:
         subprocess.run(['screencapture', '-x', TEMP_SCREENSHOT_PATH], check=True)

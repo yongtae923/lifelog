@@ -15,7 +15,7 @@ if df.empty:
     st.warning("No Data Found.")
     st.stop()
 
-# 핵심 지표
+# Key metrics
 c1, c2, c3 = st.columns(3)
 c1.metric("Total Logs", len(df))
 c2.metric("Used Apps", df['app_name'].nunique())
@@ -23,7 +23,7 @@ c3.metric("Avg Noise", int(df['audio_db'].mean()) if 'audio_db' in df.columns el
 
 st.divider()
 
-# 활동 흐름
+# Activity timeline
 st.subheader("📈 Activity Flow")
 df_res = df.set_index('timestamp').resample('10T').size().reset_index(name='count')
 fig = px.line(df_res, x='timestamp', y='count')
@@ -31,13 +31,13 @@ fig.update_traces(fill='tozeroy', line_color='#4C78A8')
 fig.update_layout(height=300, dragmode='select', hovermode='x unified')
 selection = st.plotly_chart(fig, use_container_width=True, on_select="rerun")
 
-# 앱 랭킹 & 워드클라우드
+# App ranking & word cloud
 col_l, col_r = st.columns(2)
 with col_l:
     st.subheader("🏆 Top Apps")
     cnt = df['app_name'].value_counts().head(10).reset_index(name='count')
     
-    # 1. 차트 객체(fig)를 먼저 만듭니다.
+    # 1. Build the chart object first.
     fig = px.bar(
         cnt, 
         y='app_name', 
@@ -47,11 +47,10 @@ with col_l:
         color_continuous_scale='Viridis'
     )
     
-    # 2. [핵심] Y축 정렬 순서를 변경합니다.
-    # 'total ascending': 값이 적은게 아래로, 큰게 위로 올라감 -> 1등이 맨 위
+    # 2. Reorder the Y axis so the largest value appears at the top.
     fig.update_layout(yaxis={'categoryorder':'total ascending'})
     
-    # 3. 차트 출력
+    # 3. Render the chart
     st.plotly_chart(fig, use_container_width=True)
 
 with col_r:
