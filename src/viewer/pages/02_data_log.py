@@ -4,7 +4,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import utils
 
 st.title("📋 Raw Data Log")
-hours = st.sidebar.slider("Time Range", 1, 24, 6)
+with st.sidebar:
+    hours = st.slider("Time Range", 1, 72, 24)
+    if st.button("Refresh"): st.cache_data.clear()
 df = utils.load_data(hours).sort_values('timestamp', ascending=False)
 
 if not df.empty:
