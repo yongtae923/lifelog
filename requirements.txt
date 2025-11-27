@@ -1,0 +1,12 @@
+streamlit
+plotly
+matplotlib
+pandas
+numpy
+sounddevice
+Pillow
+pytesseract
+wordcloud
+chromadb
+sentence-transformers
+
