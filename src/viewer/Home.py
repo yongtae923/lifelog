@@ -7,10 +7,10 @@ st.set_page_config(page_title="My LifeLog", page_icon="📊", layout="wide")
 st.title("📊 Activity Dashboard")
 
 with st.sidebar:
-    hours = st.slider("Time Range", 1, 72, 24)
+    hours_slider = st.slider("Time Range", 1, 72, 24)
     if st.button("Refresh"): st.cache_data.clear()
 
-df = utils.load_data(hours)
+df = utils.load_data(hours_slider * 1.2)
 if df.empty:
     st.warning("No Data Found.")
     st.stop()
