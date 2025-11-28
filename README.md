@@ -5,10 +5,7 @@ A personal life-logging stack that captures macOS screen context (active app, OC
 ## Features
 - **Backend logger** (`src/backend/logger.py`): captures screenshots, runs OCR (Tesseract), logs active app/window, browser URL, and ambient noise level every 5 minutes into `db/lifelog.db`.
 - **Embeddings pipeline** (`src/backend/embedder.py`): syncs textual context to a local ChromaDB vector store for semantic search experiments.
-- **Viewer app** (`src/viewer`):
-  - `Home.py`: overview dashboard (activity timeline, top apps, word cloud).
-  - `pages/01_analysis.py`: deeper analysis tabs (Noise Distribution, Top Domains).
-  - `pages/02_data_log.py`: recent raw logs table.
+- **Viewer app** (`src/viewer/Home.py`): single-page dashboard with overview metrics, activity timeline, top apps, word cloud, deep analysis tabs (Noise Distribution, Top Domains), and raw data log table.
 
 ## Prerequisites
 - macOS (uses `screencapture`, `osascript`, CoreAudio, etc.)
@@ -60,7 +57,7 @@ cd src/viewer
 streamlit run Home.py
 ```
 
-The sidebar on each page lets you adjust time range and force-refresh cached queries.
+The sidebar lets you adjust time range and force-refresh cached queries. All visualizations and tables update based on the selected time window.
 
 ## macOS Installation & Launch Instructions
 

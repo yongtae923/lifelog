@@ -123,6 +123,6 @@ if __name__ == "__main__":
     try:
         while True:
             capture_and_log()
-            time.sleep(300) 
+            time.sleep(180) 
     except KeyboardInterrupt:
         print("\nStopping...")

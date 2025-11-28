@@ -66,3 +66,45 @@ with col_r:
         ax.imshow(img, interpolation='bilinear'); ax.axis('off')
         st.pyplot(fig_wc)
     else: st.info("No text data")
+
+st.divider()
+
+# Noise Level Distribution
+st.subheader("🎧 Noise Level Distribution")
+custom_colors = {
+    "Arc": "#4FC3F7",               # sky blue
+    "Obsidian": "#8E44AD",          # purple
+    "KakaoTalk": "#FEE500",         # yellow
+    "Discord": "#1B1F72",           # navy
+    "Microsoft Word": "#185ABD",    # blue
+    "Cursor": "#9AA0A6",            # gray
+}
+scatter_fig = px.scatter(
+    df,
+    x='timestamp',
+    y='audio_db',
+    color='app_name',
+    size='audio_db',
+    color_discrete_map=custom_colors,
+    color_discrete_sequence=px.colors.qualitative.Vivid
+)
+st.plotly_chart(scatter_fig, use_container_width=True)
+
+st.divider()
+
+# Top Domains
+st.subheader("🔗 Top Domains")
+if 'url' in df.columns:
+    df['domain'] = df['url'].apply(lambda x: x.split('/')[2] if isinstance(x,str) and len(x)>8 else None)
+    cnt_domain = df['domain'].value_counts().reset_index(name='count')
+    if not cnt_domain.empty:
+        st.plotly_chart(px.treemap(cnt_domain.head(20), path=['domain'], values='count'), use_container_width=True)
+
+st.divider()
+
+# Raw Data Log
+st.subheader("📋 Raw Data Log")
+df_sorted = df.sort_values('timestamp', ascending=False)
+if not df_sorted.empty:
+    cols = ['timestamp', 'app_name', 'audio_db', 'url', 'window_title', 'ocr_text']
+    st.dataframe(df_sorted[[c for c in cols if c in df_sorted.columns]], use_container_width=True, height=600)
